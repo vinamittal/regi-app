@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Check Out') {
+            steps {
+                git branch: 'main', url: 'https://github.com/vinamittal/regi-app.git'
+            }
+        }
+        stage('Terraform Init') {
+            steps {
+                dir('Eks-Terraform') {
+                    sh 'terraform init'
+                }
+            }
+        }
+        stage('Terraform Validate') {
+            steps {
+                dir('Eks-Terraform') {
+                    sh 'terraform validate'
+                }
+            }
+        }
+        stage('Terraform plan') {
+            steps {
+                dir('Eks-Terraform') {
+                    sh 'terraform plan'
+                }
+            }
+        }
+        stage('Terraform Apply/Destroy') {
+            steps {
+                dir('Eks-Terraform') {
+                    sh 'terraform ${action} --auto-approve'
+                }
+            }
+        }
+    }
+}

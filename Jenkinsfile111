@@ -3,7 +3,7 @@ pipeline {
     tools{
         maven 'maven3'
         jdk 'java17'
-        terraform 'terraform-eks'
+        terraform 'terraform'
     }
     environment {
         SCANNER_HOME=tool 'sonar-sccaner'
